@@ -50,6 +50,8 @@ static NSString *const kGoogleUserInfoProfileScope = @"https://www.googleapis.co
  */
 @property(nonatomic, copy, readonly) NSArray<NSString *> *scopes;
 
+@property(nonatomic, copy, nullable) void (^didRequestActivityIndicator)(BOOL);
+
 /** @fn init
     @brief Convenience initializer. Calls designated init with default
         scopes of "email" and "profile".

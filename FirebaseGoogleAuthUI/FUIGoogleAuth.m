@@ -161,16 +161,29 @@ static NSString *const kSignInWithGoogle = @"SignInWithGoogle";
     }
     return;
   }
-  UIActivityIndicatorView *activityView =
-      [FUIAuthBaseViewController addActivityIndicator:_presentingViewController.view];
-  [activityView startAnimating];
+    
+    UIActivityIndicatorView *activityView;
+    
+    if (_didRequestActivityIndicator != nil) {
+        _didRequestActivityIndicator(YES);
+    }
+    else {
+        activityView = [FUIAuthBaseViewController addActivityIndicator:_presentingViewController.view];
+        [activityView startAnimating];
+    }
+    
   FIRAuthCredential *credential =
       [FIRGoogleAuthProvider credentialWithIDToken:user.authentication.idToken
                                        accessToken:user.authentication.accessToken];
   [self callbackWithCredential:credential error:nil result:^(FIRUser *_Nullable user,
                                                              NSError *_Nullable error) {
-    [activityView stopAnimating];
-    [activityView removeFromSuperview];
+      if (self.didRequestActivityIndicator != nil) {
+          self.didRequestActivityIndicator(NO);
+      }
+      else {
+          [activityView stopAnimating];
+          [activityView removeFromSuperview];
+      }
   }];
 }
 
