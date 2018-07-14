@@ -42,6 +42,8 @@ typedef void (^FUIAuthAlertActionHandler)(void);
  */
 @property(nonatomic, strong, readonly) FUIAuth *authUI;
 
+@property (nonatomic, copy, nullable) void (^activityHandler)(BOOL);
+
 /** @fn init
     @brief Please use @c initWithNibName:bundle:authUI:.
  */

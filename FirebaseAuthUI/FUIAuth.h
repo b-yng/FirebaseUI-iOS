@@ -55,6 +55,8 @@ typedef void (^FUIAuthResultCallback)(FIRUser *_Nullable user, NSError *_Nullabl
     didSignInWithAuthDataResult:(nullable FIRAuthDataResult *)authDataResult
                           error:(nullable NSError *)error;
 
+- (void)authUI:(FUIAuth *)authUI didRequestActivityIndicator:(BOOL)isVisible;
+
 /** @fn authUI:didSignInWithUser:error:
     @brief This is deprecated API and will be removed in a future release.
         Use @c authUI:didSignInWithAuthDataResult:error:
@@ -140,6 +142,7 @@ __attribute__((deprecated("Instead use authUI:didSignInWithAuthDataResult:error:
 - (FUIPasswordVerificationViewController *)passwordVerificationViewControllerForAuthUI:(FUIAuth *)authUI
                                                                                  email:(NSString *)email
                                                                          newCredential:(FIRAuthCredential *)newCredential;
+
 @end
 
 /** @class FUIAuth

@@ -318,6 +318,14 @@ static NSString *const kAuthUICodingKey = @"authUI";
 
 - (void)incrementActivity {
   _activityCount++;
+    
+    if ([_authUI.delegate respondsToSelector:@selector(authUI:didRequestActivityIndicator:)]) {
+        FUIAuth *authUI = _authUI;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [authUI.delegate authUI:authUI didRequestActivityIndicator:true];
+        });
+        return;
+    }
 
   // Delay the display of acitivty indiactor for a short period of time.
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
@@ -339,6 +347,14 @@ static NSString *const kAuthUICodingKey = @"authUI";
   }
 
   if (_activityCount == 0) {
+      if ([_authUI.delegate respondsToSelector:@selector(authUI:didRequestActivityIndicator:)]) {
+          FUIAuth *authUI = _authUI;
+          dispatch_async(dispatch_get_main_queue(), ^{
+              [authUI.delegate authUI:authUI didRequestActivityIndicator:false];
+          });
+          return;
+      }
+      
     [_activityIndicator.superview sendSubviewToBack:_activityIndicator];
     [_activityIndicator stopAnimating];
   }
