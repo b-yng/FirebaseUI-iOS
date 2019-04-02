@@ -16,6 +16,7 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
+*/*/xcshareddata/**
 
 # Third Party
 /sdk
@@ -26,6 +27,5 @@ DerivedData
 
 .DS_Store
 Pods/
-Podfile.lock
 *.xcworkspace/
 samples/**/GoogleService-Info.plist
