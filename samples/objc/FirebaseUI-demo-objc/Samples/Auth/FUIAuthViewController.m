@@ -44,7 +44,8 @@ NS_ENUM(NSUInteger, FIRProviders) {
   kIDPTwitter,
   kIDPPhone,
   kIDPAnonymous,
-  kIDPMicrosoft
+  kIDPMicrosoft,
+  kIDPGitHub,
 };
 
 static NSString *const kFirebaseTermsOfService = @"https://firebase.google.com/terms/";
@@ -126,13 +127,10 @@ static NSString *const kFirebasePrivacyPolicy = @"https://firebase.google.com/su
                                                           inSection:kSectionsProviders]
                               animated:NO
                         scrollPosition:UITableViewScrollPositionNone];
-  // Disable twitter provider if token is not set.
-  if (!kTwitterConsumerKey.length || !kTwitterConsumerSecret.length) {
-    NSIndexPath *twitterRow = [NSIndexPath indexPathForRow:kIDPTwitter
-                                                 inSection:kSectionsProviders];
-    [self tableView:self.tableView cellForRowAtIndexPath:twitterRow].userInteractionEnabled = NO;
-    [self.tableView deselectRowAtIndexPath:twitterRow animated:NO];
-  }
+  [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:kIDPGitHub
+                                                          inSection:kSectionsProviders]
+                              animated:NO
+                        scrollPosition:UITableViewScrollPositionNone];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -293,9 +291,9 @@ static NSString *const kFirebasePrivacyPolicy = @"https://firebase.google.com/su
     if (error.code == FUIAuthErrorCodeMergeConflict) {
       FIRAuthCredential *credential = error.userInfo[FUIAuthCredentialKey];
       [[FUIAuth defaultAuthUI].auth
-          signInAndRetrieveDataWithCredential:credential
-                                   completion:^(FIRAuthDataResult *_Nullable authResult,
-                                                NSError *_Nullable error) {
+          signInWithCredential:credential
+                    completion:^(FIRAuthDataResult *_Nullable authResult,
+                                 NSError *_Nullable error) {
         if (error) {
           [self showAlertWithTitlte:@"Sign-In error" message:error.description];
           NSLog(@"%@",error.description);
@@ -388,9 +386,15 @@ static NSString *const kFirebasePrivacyPolicy = @"https://firebase.google.com/su
                                                signInMethod:FIREmailLinkAuthSignInMethod
                                             forceSameDevice:NO
                                       allowNewEmailAccounts:YES
+                                         requireDisplayName:YES
                                           actionCodeSetting:actionCodeSettings];
           } else {
-            provider = [[FUIEmailAuth alloc] init];
+            provider = [[FUIEmailAuth alloc] initAuthAuthUI:[FUIAuth defaultAuthUI]
+                                               signInMethod:FIREmailPasswordAuthSignInMethod
+                                            forceSameDevice:NO
+                                      allowNewEmailAccounts:YES
+                                         requireDisplayName:NO
+                                          actionCodeSetting:[[FIRActionCodeSettings alloc] init]];
           }
           break;
         case kIDPGoogle:
@@ -407,7 +411,26 @@ static NSString *const kFirebasePrivacyPolicy = @"https://firebase.google.com/su
                                      :[[FUIFacebookAuth alloc] init];
           break;
         case kIDPTwitter:
-          provider = [[FUITwitterAuth alloc] init];
+          {
+            UIColor *buttonColor = [UIColor colorWithRed:71.0f/255.0f
+                                                   green:154.0f/255.0f
+                                                    blue:234.0f/255.0f
+                                                   alpha:1.0f];
+            NSString *iconPath =
+                [[NSBundle mainBundle] pathForResource:@"twtrsymbol" ofType:@"png"];
+            if (!iconPath) {
+              NSLog(@"Warning: Unable to find twitter icon.");
+            }
+            provider = [[FUIOAuth alloc] initWithAuthUI:[FUIAuth defaultAuthUI]
+                                             providerID:@"twitter.com"
+                                        buttonLabelText:@"Sign in with Twitter"
+                                              shortName:@"Twitter"
+                                            buttonColor:buttonColor
+                                              iconImage:[UIImage imageWithContentsOfFile:iconPath]
+                                                 scopes:@[@"user.readwrite"]
+                                       customParameters:@{@"prompt" : @"consent"}
+                                           loginHintKey:nil];
+          }
           break;
         case kIDPPhone:
           provider = [[FUIPhoneAuth alloc] initWithAuthUI:[FUIAuth defaultAuthUI]];
@@ -429,7 +452,27 @@ static NSString *const kFirebasePrivacyPolicy = @"https://firebase.google.com/su
                                             buttonColor:buttonColor
                                               iconImage:[UIImage imageWithContentsOfFile:iconPath]
                                                  scopes:@[@"user.readwrite"]
-                                       customParameters:@{@"prompt" : @"consent"}];
+                                       customParameters:@{@"prompt" : @"consent"}
+                                           loginHintKey:@"login_hint"];
+          }
+          break;
+        case kIDPGitHub:
+          {
+            UIColor *buttonColor = [UIColor colorWithRed:.2 green:.2 blue:.2 alpha:1.0];
+            NSString *iconPath = [[NSBundle mainBundle] pathForResource:@"githubsymbol"
+                                                                 ofType:@"png"];
+            if (!iconPath) {
+              NSLog(@"Warning: Unable to find GitHub icon.");
+            }
+            provider = [[FUIOAuth alloc] initWithAuthUI:[FUIAuth defaultAuthUI]
+                                             providerID:@"github.com"
+                                        buttonLabelText:@"Sign in with GitHub"
+                                              shortName:@"GitHub"
+                                            buttonColor:buttonColor
+                                              iconImage:[UIImage imageWithContentsOfFile:iconPath]
+                                                 scopes:nil
+                                       customParameters:nil
+                                           loginHintKey:nil];
           }
           break;
         default:

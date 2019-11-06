@@ -34,6 +34,8 @@
 		8D69E3BF21DD63D100CFA49B /* FUIEmailEntryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D69E3B721DD63D000CFA49B /* FUIEmailEntryViewController.xib */; };
 		8D69E3C021DD63D100CFA49B /* FUIPasswordVerificationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D69E3B821DD63D100CFA49B /* FUIPasswordVerificationViewController.xib */; };
 		8D69E3C121DD63D100CFA49B /* FUIPasswordSignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D69E3B921DD63D100CFA49B /* FUIPasswordSignInViewController.xib */; };
+		8DB377A0226137CC00BF5095 /* FUIConfirmEmailViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 8DB3779E226137CC00BF5095 /* FUIConfirmEmailViewController.h */; };
+		8DB377A1226137CC00BF5095 /* FUIConfirmEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB3779F226137CC00BF5095 /* FUIConfirmEmailViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +79,8 @@
 		8D69E3B721DD63D000CFA49B /* FUIEmailEntryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FUIEmailEntryViewController.xib; path = Resources/FUIEmailEntryViewController.xib; sourceTree = "<group>"; };
 		8D69E3B821DD63D100CFA49B /* FUIPasswordVerificationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FUIPasswordVerificationViewController.xib; path = Resources/FUIPasswordVerificationViewController.xib; sourceTree = "<group>"; };
 		8D69E3B921DD63D100CFA49B /* FUIPasswordSignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FUIPasswordSignInViewController.xib; path = Resources/FUIPasswordSignInViewController.xib; sourceTree = "<group>"; };
+		8DB3779E226137CC00BF5095 /* FUIConfirmEmailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FUIConfirmEmailViewController.h; sourceTree = "<group>"; };
+		8DB3779F226137CC00BF5095 /* FUIConfirmEmailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FUIConfirmEmailViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,12 +102,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3F62AEE76F7ADD8E7928642E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		8D69E35B21DD623F00CFA49B = {
 			isa = PBXGroup;
 			children = (
 				8D69E36721DD623F00CFA49B /* FirebaseEmailAuthUI */,
 				8D69E37221DD623F00CFA49B /* FirebaseEmailAuthUITests */,
 				8D69E36621DD623F00CFA49B /* Products */,
+				3F62AEE76F7ADD8E7928642E /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -127,6 +139,8 @@
 				8D69E38921DD63B300CFA49B /* FUIEmailAuthStrings.m */,
 				8D69E38821DD63B200CFA49B /* FUIEmailEntryViewController.h */,
 				8D69E38221DD63B200CFA49B /* FUIEmailEntryViewController.m */,
+				8DB3779E226137CC00BF5095 /* FUIConfirmEmailViewController.h */,
+				8DB3779F226137CC00BF5095 /* FUIConfirmEmailViewController.m */,
 				8D69E38B21DD63B300CFA49B /* FUIPasswordRecoveryViewController.h */,
 				8D69E38C21DD63B300CFA49B /* FUIPasswordRecoveryViewController.m */,
 				8D69E37F21DD63B200CFA49B /* FUIPasswordSignInViewController_Internal.h */,
@@ -177,6 +191,7 @@
 				8D69E39821DD63B300CFA49B /* FUIEmailEntryViewController.h in Headers */,
 				8D69E38F21DD63B300CFA49B /* FUIPasswordSignInViewController_Internal.h in Headers */,
 				8D69E39B21DD63B300CFA49B /* FUIPasswordRecoveryViewController.h in Headers */,
+				8DB377A0226137CC00BF5095 /* FUIConfirmEmailViewController.h in Headers */,
 				8D69E37621DD623F00CFA49B /* FirebaseEmailAuthUI.h in Headers */,
 				8D69E39321DD63B300CFA49B /* FUIPasswordVerificationViewController.h in Headers */,
 				8D69E39A21DD63B300CFA49B /* FUIPasswordSignInViewController.h in Headers */,
@@ -294,6 +309,7 @@
 				8D69E39921DD63B300CFA49B /* FUIEmailAuthStrings.m in Sources */,
 				8D69E39621DD63B300CFA49B /* FUIPasswordSignUpViewController.m in Sources */,
 				8D69E39C21DD63B300CFA49B /* FUIPasswordRecoveryViewController.m in Sources */,
+				8DB377A1226137CC00BF5095 /* FUIConfirmEmailViewController.m in Sources */,
 				8D69E39721DD63B300CFA49B /* FUIPasswordVerificationViewController.m in Sources */,
 				8D69E39E21DD63B300CFA49B /* FUIEmailAuth.m in Sources */,
 				8D69E39D21DD63B300CFA49B /* FUIPasswordSignInViewController.m in Sources */,

@@ -36,8 +36,8 @@ pod 'FirebaseUI/Auth'
 pod 'FirebaseUI/Email'
 pod 'FirebaseUI/Google'
 pod 'FirebaseUI/Facebook'
-pod 'FirebaseUI/Twitter'
 pod 'FirebaseUI/Phone'
+pod 'FirebaseUI/OAuth'
 ```
 
 ### Configuring sign-in providers
@@ -48,7 +48,6 @@ Auth guides at the following links:
 - [Email and password](https://firebase.google.com/docs/auth/ios/password-auth#before_you_begin)
 - [Google](https://firebase.google.com/docs/auth/ios/google-signin#before_you_begin)
 - [Facebook](https://firebase.google.com/docs/auth/ios/facebook-login#before_you_begin)
-- [Twitter](https://firebase.google.com/docs/auth/ios/twitter-login#before_you_begin)
 - [Phone](https://firebase.google.com/docs/auth/ios/phone-auth#before_you_begin)
 
 ## Using FirebaseUI for Authentication
@@ -95,7 +94,6 @@ let providers: [FUIAuthProvider] = [
   FUIEmailAuth(),
   FUIGoogleAuth(),
   FUIFacebookAuth(),
-  FUITwitterAuth(),
   FUIPhoneAuth(authUI: FUIAuth.defaultAuthUI()),
 ]
 self.authUI?.providers = providers
@@ -111,7 +109,6 @@ NSArray<id<FUIAuthProvider>> *providers = @[
   [[FUIEmailAuth alloc] init],
   [[FUIGoogleAuth alloc] init],
   [[FUIFacebookAuth alloc] init],
-  [[FUITwitterAuth alloc] init],
   [[FUIPhoneAuth alloc] initWithAuthUI:[FUIAuth defaultAuthUI]]
 ];
 _authUI.providers = providers;
@@ -122,7 +119,7 @@ For Google Sign-in support, add custom URL schemes to your Xcode project
 
 For Facebook Login support, follow step 3 and 4 of
 [Facebook login documentation](https://developers.google.com/firebase/docs/auth/ios/facebook-login#before_you_begin),
-and add custom URL schemes in step 4 of [Facebook SDK for iOS-Getting started documentation](https://developers.facebook.com/docs/ios/getting-started).
+and follow the [Facebook SDK for iOS Getting started documentation](https://developers.facebook.com/docs/ios/getting-started).
 
 Finally, add a call to handle the URL that your application receives at the end
 of the Google/Facebook authentication process.
@@ -216,7 +213,7 @@ Auth.defaultAuthUI.handleOpenURL(url, sourceApplication: sourceApplication)
 We support cross device email link sign in for the normal flows. It is not supported with anonymous user upgrade. By default, cross device support is enabled. You can disable it setting `forceSameDevice` to false in the `FUIEmailAuth` initializer.
 
 ## Customizing FirebaseUI for authentication
-### Custom terms of Service (ToS) URL
+### Custom Terms of Service (ToS) and privacy policy URLs
 
 The Terms of Service URL for your application, which is displayed on the
 email/password account creation screen, can be specified as follows:
@@ -230,6 +227,13 @@ authUI?.tosurl = kFirebaseTermsOfService
 ```objective-c
 // Objective-C
 authUI.TOSURL = [NSURL URLWithString:@"https://example.com/tos"];
+```
+
+The same applies to the URL of your privacy policy:
+```swift
+// Swift
+let kFirebasePrivacyPolicy = URL(string: "https://policies.google.com/privacy")!
+authUI?.privacyPolicyURL = kFirebasePrivacyPolicy
 ```
 
 ### Custom strings
@@ -364,6 +368,11 @@ Refer to the Objective-C and Swift samples for examples of how you can customize
 these views.
 
 ## Handling auto-upgrade of anonymous users
+By default, the auto-upgrade of anonymous users is disabled. You can enable it 
+by simply changing the associated attribute of your Firebase Auth instance:
+```swift
+authUI?.shouldAutoUpgradeAnonymousUsers = true
+```
 
 Enabling auto-upgrade of anonymous users increases the complexity of your auth
 flow by adding several more edge cases that need to be handled. As opposed to

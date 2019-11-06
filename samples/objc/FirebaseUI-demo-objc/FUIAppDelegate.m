@@ -19,21 +19,11 @@
 @import Firebase;
 #import <FirebaseUI/FirebaseUI.h>
 #import <GTMSessionFetcher/GTMSessionFetcherLogging.h>
-#import <TwitterKit/TWTRTwitter.h>
-
-// TODO: Update with Twitter key and secret
-NSString *const kTwitterConsumerKey = @"";
-NSString *const kTwitterConsumerSecret = @"";
 
 @implementation FUIAppDelegate
 
 - (BOOL)application:(UIApplication *)application
 didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  if (kTwitterConsumerKey.length && kTwitterConsumerSecret.length) {
-    [[TWTRTwitter sharedInstance] startWithConsumerKey:kTwitterConsumerKey
-                                        consumerSecret:kTwitterConsumerSecret];
-  }
-
   [FIRApp configure];
   [GTMSessionFetcher setLoggingEnabled:YES];
   return YES;
@@ -43,13 +33,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
             openURL:(NSURL *)url
             options:(NSDictionary<NSString*, id> *)options {
   NSString *sourceApplication = options[UIApplicationOpenURLOptionsSourceApplicationKey];
-  return [self handleOpenUrl:url sourceApplication:sourceApplication];
-}
-
-- (BOOL)application:(UIApplication *)application
-            openURL:(NSURL *)url
-  sourceApplication:(nullable NSString *)sourceApplication
-         annotation:(id)annotation {
   return [self handleOpenUrl:url sourceApplication:sourceApplication];
 }
 
